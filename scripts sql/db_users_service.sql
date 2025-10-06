@@ -1,3 +1,6 @@
+DROP DATABASE IF EXISTS db_user_service;
+CREATE DATABASE db_user_service;
+use db_user_service;
 
 CREATE TABLE users (
   id             BIGINT auto_increment PRIMARY KEY,

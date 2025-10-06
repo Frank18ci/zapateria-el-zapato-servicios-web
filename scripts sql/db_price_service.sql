@@ -1,6 +1,10 @@
 -- Servicio: Precios
 -- Nota: variant_id referencia externa a Catalog.product_variant.id (sin FK cruzado)
 
+DROP DATABASE IF EXISTS db_price_service;
+CREATE DATABASE db_price_service;
+use db_price_service;
+
 CREATE TABLE price_list (
   id            BIGINT auto_increment PRIMARY KEY,
   name          TEXT NOT NULL UNIQUE,
