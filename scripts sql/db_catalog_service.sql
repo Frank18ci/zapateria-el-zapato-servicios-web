@@ -1,5 +1,7 @@
 -- Servicio: Catálogo de Producto
-
+DROP DATABASE IF EXISTS db_catalog_service;
+CREATE DATABASE db_catalog_service;
+use db_catalog_service;
 -- Catálogos base
 CREATE TABLE brand (
   id   BIGINT auto_increment PRIMARY KEY,

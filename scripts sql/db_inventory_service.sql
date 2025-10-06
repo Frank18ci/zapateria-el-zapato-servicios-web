@@ -1,3 +1,6 @@
+DROP DATABASE IF EXISTS db_inventory_service;
+CREATE DATABASE db_inventory_service;
+use db_inventory_service;
 -- Servicio: Inventario
 -- Nota: variant_id referencia externa a Catalog.product_variant.id (sin FK cruzado)
 
