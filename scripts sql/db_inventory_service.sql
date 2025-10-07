@@ -23,7 +23,7 @@ CREATE TABLE stock_movement (
   bin_code       VARCHAR(50),                 -- ubicación libre
   movement_type  VARCHAR(30) NOT NULL,       -- RECEIPT, ISSUE, ADJUSTMENT, TRANSFER_IN, TRANSFER_OUT
   quantity       INT NOT NULL CHECK (quantity <> 0),
-  unit_cost      NUMERIC(12,2),
+  unit_cost      DECIMAL(12,2),
   currency_code  CHAR(3),
   created_at     DATETIME NOT NULL DEFAULT NOW(),
   reason         VARCHAR(255),
