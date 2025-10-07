@@ -1,6 +1,6 @@
-DROP DATABASE IF EXISTS db_user_service;
-CREATE DATABASE db_user_service;
-use db_user_service;
+DROP DATABASE IF EXISTS db_zapateria_user_service;
+CREATE DATABASE db_zapateria_user_service;
+use db_zapateria_user_service;
 
 CREATE TABLE users (
   id             BIGINT auto_increment PRIMARY KEY,
@@ -10,7 +10,7 @@ CREATE TABLE users (
   full_name      VARCHAR(100),
   status         VARCHAR(50) NOT NULL DEFAULT 'ACTIVE',
   created_at     DATETIME NOT NULL DEFAULT NOW(),
-  updated_at     DATETIME NOT NULL DEFAULT NOW(),
+  updated_at     DATETIME NOT NULL DEFAULT NOW() on update now(),
   CHECK (status IN ('ACTIVE','INACTIVE','LOCKED','PENDING'))
 );
 
