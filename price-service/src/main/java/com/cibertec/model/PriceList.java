@@ -23,7 +23,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Entity
 @Builder
-@Table(name="price")
+@Table(name="price_list")
 public class PriceList {
 	
 	   @Id

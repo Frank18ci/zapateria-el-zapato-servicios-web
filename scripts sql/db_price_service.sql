@@ -1,8 +1,8 @@
 -- Nota: variant_id referencia externa a Catalog.product_variant.id (sin FK cruzado)
 
-DROP DATABASE IF EXISTS db_price_service;
-CREATE DATABASE db_price_service;
-use db_price_service;
+DROP DATABASE IF EXISTS db_zapateria_price_service;
+CREATE DATABASE db_zapateria_price_service;
+use db_zapateria_price_service;
 -- Servicio: Precios
 
 CREATE TABLE price_list (
