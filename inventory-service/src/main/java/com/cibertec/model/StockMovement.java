@@ -22,7 +22,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Builder
 @Entity
-@Table(name="stocks")
+@Table(name="stock_movement")
 public class StockMovement {
 	
 	@Id
