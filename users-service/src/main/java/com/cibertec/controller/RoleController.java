@@ -2,6 +2,7 @@ package com.cibertec.controller;
 
 import com.cibertec.dto.RoleRequest;
 import com.cibertec.service.RoleService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -21,11 +22,11 @@ public class RoleController {
         return ResponseEntity.ok(roleService.getRoleById(id));
     }
     @PostMapping
-    public ResponseEntity<?> createRole(@RequestBody RoleRequest roleRequest) {
+    public ResponseEntity<?> createRole(@RequestBody @Valid RoleRequest roleRequest) {
         return ResponseEntity.status(HttpStatus.CREATED).body(roleService.createRole(roleRequest));
     }
     @PutMapping("/{id}")
-    public ResponseEntity<?> updateRole(@PathVariable Long id, @RequestBody RoleRequest roleRequest) {
+    public ResponseEntity<?> updateRole(@PathVariable Long id, @RequestBody @Valid RoleRequest roleRequest) {
         return ResponseEntity.ok(roleService.updateRole(id, roleRequest));
     }
     @DeleteMapping("/{id}")

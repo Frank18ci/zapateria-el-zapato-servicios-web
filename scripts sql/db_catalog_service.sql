@@ -1,7 +1,7 @@
 -- Servicio: Catálogo de Producto
-DROP DATABASE IF EXISTS db_catalog_service;
-CREATE DATABASE db_catalog_service;
-use db_catalog_service;
+DROP DATABASE IF EXISTS db_zapateria_catalog_service;
+CREATE DATABASE db_zapateria_catalog_service;
+use db_zapateria_catalog_service;
 -- Catálogos base
 CREATE TABLE brand (
   id   BIGINT auto_increment PRIMARY KEY,
@@ -21,10 +21,11 @@ insert into brand (name) values
 ('Converse');
 
 CREATE TABLE category (
-  id        BIGINT auto_increment PRIMARY KEY,
+  id        BIGINT AUTO_INCREMENT PRIMARY KEY,
   name      VARCHAR(50) NOT NULL,
-  parent_id BIGINT REFERENCES category(id) ON DELETE SET NULL,
-  UNIQUE (parent_id, name)
+  parent_id BIGINT NULL,
+  UNIQUE (parent_id, name),
+  FOREIGN KEY (parent_id) REFERENCES category(id) ON DELETE SET NULL
 );
 
 insert into category (name, parent_id) values
