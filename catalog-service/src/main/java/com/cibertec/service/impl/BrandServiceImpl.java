@@ -1,5 +1,9 @@
 package com.cibertec.service.impl;
 
+import java.util.List;
+
+import org.springframework.stereotype.Service;
+
 import com.cibertec.dto.BrandRequest;
 import com.cibertec.dto.BrandResponse;
 import com.cibertec.exception.ResourceNotFound;
@@ -7,16 +11,16 @@ import com.cibertec.model.Brand;
 import com.cibertec.repository.BrandRepository;
 import com.cibertec.service.BrandService;
 import com.cibertec.util.BrandMapper;
-import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Service;
 
-import java.util.List;
+import lombok.RequiredArgsConstructor;
 
 @Service
 @RequiredArgsConstructor
 public class BrandServiceImpl implements BrandService {
+    
     private final BrandRepository brandRepository;
     private final BrandMapper brandMapper;
+    
     @Override
     public List<BrandResponse> getAllBrands() {
         return brandMapper.toDtoList(brandRepository.findAll());

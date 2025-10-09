@@ -11,38 +11,44 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.cibertec.dto.BrandRequest;
-import com.cibertec.service.BrandService;
+import com.cibertec.dto.WarehouseRequest;
+import com.cibertec.service.WarehouseService;
 
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 
+@RequestMapping("/warehouses")
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/brands")
-public class BrandController {
+public class WarehouseController {
 
-    private final BrandService brandService;
-    
-    @GetMapping
+    private final WarehouseService  warehouseService;
+
+     @GetMapping
     public ResponseEntity<?> findAll() {
-        return ResponseEntity.ok(brandService.getAllBrands());
+        return ResponseEntity.ok(warehouseService.getAllWarehouses());
     }
-    @GetMapping("/{id}")
+
+     @GetMapping("/{id}")
     public ResponseEntity<?> findById(@PathVariable Long id) {
-        return ResponseEntity.ok(brandService.getBrandById(id));
+        return ResponseEntity.ok(warehouseService.getWarehouseById(id));
     }
-    @PostMapping
-    public ResponseEntity<?> create(@RequestBody @Valid BrandRequest brandRequest) {
-        return ResponseEntity.status(HttpStatus.CREATED).body(brandService.createBrand(brandRequest));
+
+      @PostMapping
+    public ResponseEntity<?> create(@RequestBody @Valid WarehouseRequest warehouseRequest) {
+        return ResponseEntity.status(HttpStatus.CREATED).body(warehouseService.createWarehouse(warehouseRequest));
     }
-    @PutMapping("/{id}")
-    public ResponseEntity<?> update(@PathVariable Long id, @RequestBody @Valid BrandRequest brandRequest) {
-        return ResponseEntity.ok(brandService.updateBrand(id, brandRequest));
+
+       @PutMapping("/{id}")
+    public ResponseEntity<?> update(@PathVariable Long id, @RequestBody @Valid WarehouseRequest warehouseRequest) {
+        return ResponseEntity.ok(warehouseService.updateWarehouse(id, warehouseRequest));
     }
-    @DeleteMapping("/{id}")
+
+       @DeleteMapping("/{id}")
     public ResponseEntity<?> delete(@PathVariable Long id) {
-        brandService.deleteBrand(id);
+        warehouseService.deleteWarehouse(id);
         return ResponseEntity.noContent().build();
     }
+
+
 }
