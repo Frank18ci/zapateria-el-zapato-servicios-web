@@ -1,7 +1,6 @@
 package com.cibertec.model;
 
 
-
 import java.time.LocalDate;
 import java.util.List;
 
@@ -22,27 +21,19 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Entity
 @Builder
-@Table(name="price_list")
+@Table(name = "price_list")
 public class PriceList {
-	
-
-	    @Id
-	    @GeneratedValue(strategy = GenerationType.IDENTITY)
-	    private Long id;
-
-		@Column(nullable = false, unique = true)
-	    private String name;
-
-	    @Column(name = "currency_code", length = 3 , columnDefinition="CHAR(3)", nullable = false)
-	    private String currencyCode;
-
-	    @Column(name = "valid_from", columnDefinition = "DATE")
-        private LocalDate validFrom;
-
-	    @Column(name = "valid_to", columnDefinition = "DATE")
-	    private LocalDate validTo;
-
-	    @OneToMany(mappedBy = "priceList")
-	    private List<Price> prices;
-
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+    @Column(nullable = false, unique = true)
+    private String name;
+    @Column(length = 3, columnDefinition = "CHAR(3)", nullable = false)
+    private String currencyCode;
+    @Column(columnDefinition = "DATE")
+    private LocalDate validFrom;
+    @Column(columnDefinition = "DATE")
+    private LocalDate validTo;
+    @OneToMany(mappedBy = "priceList")
+    private List<Price> prices;
 }

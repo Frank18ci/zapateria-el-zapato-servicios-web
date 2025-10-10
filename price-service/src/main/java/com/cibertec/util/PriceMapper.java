@@ -8,13 +8,10 @@ import com.cibertec.dto.PriceRequest;
 import com.cibertec.dto.PriceResponse;
 import com.cibertec.model.Price;
 
-@Mapper(componentModel = "spring" , uses={PriceListMapper.class})
+@Mapper(componentModel = "spring", uses = {PriceListMapper.class})
 public interface PriceMapper {
-
-     @Mapping (target = "id", ignore = true) // Ignorar el mapeo del campo 'id' si es generado automáticamente
-      Price toEntity(PriceRequest priceRequest); 
-
-      PriceResponse toDto(Price price);
-
-      List<PriceResponse> toDtoList(List<Price> prices);
+    @Mapping(source = "priceListId", target = "priceList.id")
+    Price toEntity(PriceRequest priceRequest);
+    PriceResponse toDto(Price price);
+    List<PriceResponse> toDtoList(List<Price> prices);
 }

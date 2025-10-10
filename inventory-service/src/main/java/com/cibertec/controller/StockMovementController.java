@@ -29,7 +29,7 @@ public class StockMovementController {
     public ResponseEntity<?> getAll() {
         return ResponseEntity.ok(stockMovementService.getAllStockMovements());
     }
-  
+
     @GetMapping("/{id}")
     public ResponseEntity<?> getById(@PathVariable Long id) {
         return ResponseEntity.ok(stockMovementService.getStockMovementById(id));
@@ -37,11 +37,11 @@ public class StockMovementController {
 
     @PostMapping
     public ResponseEntity<?> create(@RequestBody @Valid StockMovementRequest movementRequest) {
-         return ResponseEntity.status(HttpStatus.CREATED).body(stockMovementService.createStockMovement(movementRequest));
+        return ResponseEntity.status(HttpStatus.CREATED).body(stockMovementService.createStockMovement(movementRequest));
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<?> update (@PathVariable Long id , @RequestBody @Valid StockMovementRequest stockMovementRequest){
+    public ResponseEntity<?> update(@PathVariable Long id, @RequestBody @Valid StockMovementRequest stockMovementRequest) {
         return ResponseEntity.ok(stockMovementService.updateStockMovement(id, stockMovementRequest));
     }
 

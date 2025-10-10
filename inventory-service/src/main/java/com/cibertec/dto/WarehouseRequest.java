@@ -5,16 +5,11 @@ import lombok.Builder;
 
 @Builder
 public record WarehouseRequest(
-     
-
-     @NotBlank(message = "Code es obligatorio")
-     String code,
-     
-    @NotBlank(message = "Name es obligatorio")
-     String name,
-
-     @NotBlank(message = "Address es obligatorio")
-     String address
-    
-
-) {}
+        @NotBlank(message = "Code es obligatorio")
+        String code,
+        @NotBlank(message = "Name es obligatorio")
+        String name,
+        @NotBlank(message = "Address es obligatorio")
+        String address
+) {
+}

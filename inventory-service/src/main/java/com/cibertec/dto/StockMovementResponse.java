@@ -7,29 +7,16 @@ import lombok.Builder;
 
 @Builder
 public record StockMovementResponse(
-
-     Long id,
-
-    Long variantId,
-
-    String binCode,
-
-    String movementType,
-
-    Integer quantity,
-
-    BigDecimal unitCost,
-
-    String currencyCode,
-
-    LocalDateTime createdAt,
-
-    String reason,
-
-    String refDoc,
-
-    WarehouseResponse warehouse
-
-
-
-) {}
+        Long id,
+        Long variantId,
+        String binCode,
+        String movementType,
+        Integer quantity,
+        BigDecimal unitCost,
+        String currencyCode,
+        LocalDateTime createdAt,
+        String reason,
+        String refDoc,
+        WarehouseResponse warehouse
+) {
+}

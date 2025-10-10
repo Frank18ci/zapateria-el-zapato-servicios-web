@@ -46,6 +46,7 @@ public class PriceServiceImpl  implements  PriceService{
 
         priceFound.setUnitPrice(priceRequest.unitPrice());
         priceFound.setVariantId(priceRequest.variantId());
+        priceFound.setPriceList(priceMapper.toEntity(priceRequest).getPriceList());
         return priceMapper.toDto(priceRepository.save(priceFound));
     }
 

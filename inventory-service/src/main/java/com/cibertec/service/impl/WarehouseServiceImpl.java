@@ -16,14 +16,13 @@ import lombok.RequiredArgsConstructor;
 
 @Service
 @RequiredArgsConstructor
-public class WarehouseServiceImpl  implements WarehouseService{
-    
+public class WarehouseServiceImpl implements WarehouseService {
+
     private final WarehouseRepository warehouseRepository;
-   private final WarehouseMapper warehouseMapper;
+    private final WarehouseMapper warehouseMapper;
 
 
-
-   @Override
+    @Override
     public List<WarehouseResponse> getAllWarehouses() {
         return warehouseMapper.toDtoList(warehouseRepository.findAll());
     }
@@ -31,7 +30,7 @@ public class WarehouseServiceImpl  implements WarehouseService{
     @Override
     public WarehouseResponse getWarehouseById(Long id) {
         return warehouseMapper.toDto(warehouseRepository.findById(id).orElseThrow(
-            () -> new ResourceNotFound("Warehouse not found with id: " + id)
+                () -> new ResourceNotFound("Warehouse not found with id: " + id)
         ));
     }
 
@@ -42,8 +41,8 @@ public class WarehouseServiceImpl  implements WarehouseService{
 
     @Override
     public WarehouseResponse updateWarehouse(Long id, WarehouseRequest warehouseRequest) {
-         Warehouse warehouseFound  = warehouseRepository.findById(id).orElseThrow(
-            () -> new ResourceNotFound("Warehouse not found with id: " + id)
+        Warehouse warehouseFound = warehouseRepository.findById(id).orElseThrow(
+                () -> new ResourceNotFound("Warehouse not found with id: " + id)
         );
         warehouseFound.setCode(warehouseRequest.code());
         warehouseFound.setName(warehouseRequest.name());
@@ -53,12 +52,12 @@ public class WarehouseServiceImpl  implements WarehouseService{
 
     @Override
     public void deleteWarehouse(Long id) {
-         // implementación básica
-            Warehouse warehouseFound = warehouseRepository.findById(id).orElseThrow(
+        // implementación básica
+        Warehouse warehouseFound = warehouseRepository.findById(id).orElseThrow(
                 () -> new ResourceNotFound("Warehouse not found with id: " + id)
         );
         warehouseRepository.delete(warehouseFound);
-         
+
     }
-    
+
 }

@@ -22,29 +22,29 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class WarehouseController {
 
-    private final WarehouseService  warehouseService;
+    private final WarehouseService warehouseService;
 
-     @GetMapping
+    @GetMapping
     public ResponseEntity<?> findAll() {
         return ResponseEntity.ok(warehouseService.getAllWarehouses());
     }
 
-     @GetMapping("/{id}")
+    @GetMapping("/{id}")
     public ResponseEntity<?> findById(@PathVariable Long id) {
         return ResponseEntity.ok(warehouseService.getWarehouseById(id));
     }
 
-      @PostMapping
+    @PostMapping
     public ResponseEntity<?> create(@RequestBody @Valid WarehouseRequest warehouseRequest) {
         return ResponseEntity.status(HttpStatus.CREATED).body(warehouseService.createWarehouse(warehouseRequest));
     }
 
-       @PutMapping("/{id}")
+    @PutMapping("/{id}")
     public ResponseEntity<?> update(@PathVariable Long id, @RequestBody @Valid WarehouseRequest warehouseRequest) {
         return ResponseEntity.ok(warehouseService.updateWarehouse(id, warehouseRequest));
     }
 
-       @DeleteMapping("/{id}")
+    @DeleteMapping("/{id}")
     public ResponseEntity<?> delete(@PathVariable Long id) {
         warehouseService.deleteWarehouse(id);
         return ResponseEntity.noContent().build();

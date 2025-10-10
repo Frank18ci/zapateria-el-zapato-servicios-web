@@ -8,17 +8,10 @@ import lombok.Builder;
 
 @Builder
 public record PriceListResponse(
-
-                Long id,   
-
-                String name,
-
-                String currencyCode,
-
-                LocalDate validFrom,
-
-                LocalDate validTo,
-
-                Price price
-)
- {}
+        Long id,
+        String name,
+        String currencyCode,
+        LocalDate validFrom,
+        LocalDate validTo
+) {
+}
