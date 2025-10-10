@@ -6,7 +6,7 @@ import org.springframework.stereotype.Repository;
 import com.cibertec.model.StockMovement;
 
 @Repository
-public interface  StockMovementRespository  extends JpaRepository<StockMovement, Long> {
-    
-    
+public interface StockMovementRepository extends JpaRepository<StockMovement, Long> {
+
+
 }

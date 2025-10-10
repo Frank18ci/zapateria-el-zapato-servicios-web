@@ -8,13 +8,9 @@ import lombok.Builder;
 
 @Builder
 public record PriceResponse(
-
-    Long id,
-
-    BigDecimal unitPrice,
-
-    Long variantId,
-    
-    PriceList priceList
-
-){}
+        Long id,
+        BigDecimal unitPrice,
+        Long variantId,
+        PriceListResponse priceList
+) {
+}

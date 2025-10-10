@@ -1,4 +1,5 @@
 package com.cibertec.model;
+
 import java.math.BigDecimal;
 
 import jakarta.persistence.Column;
@@ -20,20 +21,17 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Entity
 @Builder
-@Table(name="price", uniqueConstraints={ @UniqueConstraint(columnNames = {"variant_id", "price_list_id"}) })
+@Table(name = "price", uniqueConstraints = {@UniqueConstraint(columnNames = {"variant_id", "price_list_id"})})
 public class Price {
-	 @Id
-	    @GeneratedValue(strategy = GenerationType.IDENTITY)
-	    private Long id;
-
-	    @Column(name = "unit_price" , precision = 12, scale = 2, nullable = false)
-	    private BigDecimal unitPrice;
-
-	    @Column(name = "variant_id", nullable = false)
-	    private Long variantId; 
-
-	    @ManyToOne
-	    @JoinColumn(name = "price_list_id", nullable = false)
-	    private PriceList priceList;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+    @Column(precision = 12, scale = 2, nullable = false)
+    private BigDecimal unitPrice;
+    @Column( nullable = false)
+    private Long variantId;
+    @ManyToOne
+    @JoinColumn(nullable = false)
+    private PriceList priceList;
 
 }

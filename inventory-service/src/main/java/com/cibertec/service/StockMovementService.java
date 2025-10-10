@@ -7,7 +7,7 @@ import com.cibertec.dto.StockMovementResponse;
 
 public interface StockMovementService {
 
-    
+
     List<StockMovementResponse> getAllStockMovements();
 
     StockMovementResponse getStockMovementById(Long id);
