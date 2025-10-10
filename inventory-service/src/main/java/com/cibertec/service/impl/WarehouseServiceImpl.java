@@ -49,7 +49,7 @@ public class WarehouseServiceImpl  implements WarehouseService{
         warehouseFound.setName(warehouseRequest.name());
         warehouseFound.setAddress(warehouseRequest.address());
         return warehouseMapper.toDto(warehouseRepository.save(warehouseFound));
-}
+    }
 
     @Override
     public void deleteWarehouse(Long id) {

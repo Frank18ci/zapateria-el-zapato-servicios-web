@@ -5,7 +5,6 @@ package com.cibertec.model;
 import java.time.LocalDate;
 import java.util.List;
 
-import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -26,7 +25,8 @@ import lombok.NoArgsConstructor;
 @Table(name="price_list")
 public class PriceList {
 	
-	   @Id
+
+	    @Id
 	    @GeneratedValue(strategy = GenerationType.IDENTITY)
 	    private Long id;
 
@@ -36,13 +36,13 @@ public class PriceList {
 	    @Column(name = "currency_code", length = 3 , columnDefinition="CHAR(3)", nullable = false)
 	    private String currencyCode;
 
-	    @Column(name = "valid_from")
-	    private LocalDate validFrom;
+	    @Column(name = "valid_from", columnDefinition = "DATE")
+        private LocalDate validFrom;
 
-	    @Column(name = "valid_to")
+	    @Column(name = "valid_to", columnDefinition = "DATE")
 	    private LocalDate validTo;
 
-	    @OneToMany(mappedBy = "priceList", cascade = CascadeType.ALL)
+	    @OneToMany(mappedBy = "priceList")
 	    private List<Price> prices;
-	
+
 }
