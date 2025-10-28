@@ -8,6 +8,7 @@ import java.util.List;
 @Builder
 public record UserResponse(
         Long id,
+        String keycloakSub,
         String email,
         String password,
         String username,

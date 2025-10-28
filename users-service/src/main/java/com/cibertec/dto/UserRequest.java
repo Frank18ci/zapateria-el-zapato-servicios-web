@@ -8,6 +8,7 @@ import java.util.List;
 
 @Builder
 public record UserRequest(
+        String keycloakSub,
         @Email(message = "Email no tiene formato valido")
         @NotBlank(message = "Email no debe ser nulo")
         String email,

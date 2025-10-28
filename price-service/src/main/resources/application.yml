@@ -1,6 +1,16 @@
 spring:
   application:
     name: price-service
+  cloud:
+    zookeeper:
+      connect-string: localhost:2181
+    discovery:
+      enabled: true
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: http://localhost:9000/realms/ElZapato
   datasource:
     url: jdbc:mysql://localhost:3306/db_zapateria_price_service?useSSL=false&allowPublicKeyRetrieval=true&serverTimeZone=UTC&autoReconnect=true
     username: root
