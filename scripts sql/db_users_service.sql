@@ -4,6 +4,7 @@ use db_zapateria_user_service;
 
 CREATE TABLE users (
   id             BIGINT auto_increment PRIMARY KEY,
+  keycloak_sub   VARCHAR(255) UNIQUE,
   email          VARCHAR(100) NOT NULL UNIQUE,
   username       VARCHAR(50) UNIQUE,
   password_hash  VARCHAR(255) NOT NULL,
