@@ -1,11 +1,12 @@
 package com.cibertec.service;
 
+import java.util.List;
+
 import com.cibertec.dto.CategoryRequest;
 import com.cibertec.dto.CategoryResponse;
 
-import java.util.List;
-
 public interface CategoryService {
+    
     List<CategoryResponse> getAllCategories();
     CategoryResponse getCategoryById(Long id);
     CategoryResponse createCategory(CategoryRequest categoryRequest);
