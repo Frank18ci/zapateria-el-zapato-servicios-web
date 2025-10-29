@@ -1,0 +1,14 @@
+spring:
+  application:
+    name: config-service
+  cloud:
+    zookeeper:
+      connect-string: localhost:2181
+    discovery:
+      enabled: true
+    config:
+      server:
+        git:
+          uri: https://github.com/Frank18ci/configuration-zapateria-el-zapato-servicios-web
+server:
+  port: 8100
