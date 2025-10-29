@@ -1,5 +1,9 @@
 package com.cibertec.service.impl;
 
+import java.util.List;
+
+import org.springframework.stereotype.Service;
+
 import com.cibertec.dto.CategoryRequest;
 import com.cibertec.dto.CategoryResponse;
 import com.cibertec.exception.ResourceNotFound;
@@ -7,10 +11,8 @@ import com.cibertec.model.Category;
 import com.cibertec.repository.CategoryRepository;
 import com.cibertec.service.CategoryService;
 import com.cibertec.util.CategoryMapper;
-import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Service;
 
-import java.util.List;
+import lombok.RequiredArgsConstructor;
 
 @Service
 @RequiredArgsConstructor
@@ -22,7 +24,6 @@ public class CategoryServiceImpl implements CategoryService {
     public List<CategoryResponse> getAllCategories() {
         return categoryMapper.toDtoList(categoryRepository.findAll());
     }
-
     @Override
     public CategoryResponse getCategoryById(Long id) {
         return categoryMapper.toDto(categoryRepository.findById(id).orElseThrow(
