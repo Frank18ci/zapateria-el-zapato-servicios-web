@@ -1,6 +1,8 @@
 package com.cibertec.controller;
 
+import com.cibertec.dto.ProductVariantEmailRequest;
 import com.cibertec.dto.ProductVariantRequest;
+import com.cibertec.event.producer.NotificationProducer;
 import com.cibertec.service.ProductVariantService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -13,6 +15,7 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/product-variants")
 public class ProductVariantController {
     private final ProductVariantService productVariantService;
+    private final NotificationProducer notificationProducer;
     @GetMapping
     public ResponseEntity<?> getAllProductVariants() {
         return ResponseEntity.ok(productVariantService.getAllProductVariants());
@@ -33,5 +36,10 @@ public class ProductVariantController {
     public ResponseEntity<?> deleteProductVariant(@PathVariable Long id) {
         productVariantService.deleteProductVariant(id);
         return ResponseEntity.noContent().build();
+    }
+    @PostMapping("/sendEmail")
+    public ResponseEntity<?> sendEmail(@RequestBody ProductVariantEmailRequest productVariantEmailRequest) {
+        notificationProducer.sendProductVariantNotification(productVariantEmailRequest.email(), productVariantEmailRequest.productVariantId());
+        return ResponseEntity.ok("Email notification request sent.");
     }
 }
