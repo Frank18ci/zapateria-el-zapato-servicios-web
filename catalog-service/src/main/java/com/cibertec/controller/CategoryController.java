@@ -17,6 +17,16 @@ public class CategoryController {
     public ResponseEntity<?> getAllCategories() {
         return ResponseEntity.ok(categoryService.getAllCategories());
     }
+    @GetMapping("/page")
+    public ResponseEntity<?> findAllPaged(
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "10") int size,
+            @RequestParam(defaultValue = "name") String sortBy,
+            @RequestParam(defaultValue = "asc") String direction,
+            @RequestParam(defaultValue = "") String name
+    ) {
+        return ResponseEntity.ok(categoryService.getAllCategoriesPaged(page, size, sortBy, direction, name));
+    }
     @GetMapping("/{id}")
     public ResponseEntity<?> getCategoryById(@PathVariable Long id) {
         return ResponseEntity.ok(categoryService.getCategoryById(id));

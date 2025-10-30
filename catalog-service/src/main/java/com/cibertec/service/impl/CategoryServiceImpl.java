@@ -2,6 +2,12 @@ package com.cibertec.service.impl;
 
 import java.util.List;
 
+import com.cibertec.model.Brand;
+import com.cibertec.util.SortDirectionDefault;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import com.cibertec.dto.CategoryRequest;
@@ -61,5 +67,13 @@ public class CategoryServiceImpl implements CategoryService {
                 () -> new ResourceNotFound("Category not found with id: " + id)
         );
         categoryRepository.delete(categoryFound);
+    }
+
+    @Override
+    public Page<CategoryResponse> getAllCategoriesPaged(int page, int size, String sortBy, String direction, String name) {
+        Sort sort = Sort.by(SortDirectionDefault.getSortDirection(direction), sortBy);
+        Pageable pageable = PageRequest.of(page,size,sort);
+        Page<Category> categories = categoryRepository.findByNameContaining(name, pageable);
+        return  categories.map(categoryMapper::toDto);
     }
 }

@@ -2,6 +2,11 @@ package com.cibertec.service.impl;
 
 import java.util.List;
 
+import com.cibertec.util.SortDirectionDefault;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import com.cibertec.dto.BrandRequest;
@@ -53,5 +58,13 @@ public class BrandServiceImpl implements BrandService {
                 () -> new ResourceNotFound("Brand not found with id: " + id)
         );
         brandRepository.delete(brandFound);
+    }
+
+    @Override
+    public Page<BrandResponse> getAllBrandsPaged(int page, int size, String sortBy, String direction, String name) {
+        Sort sort = Sort.by(SortDirectionDefault.getSortDirection(direction), sortBy);
+        Pageable pageable = PageRequest.of(page,size,sort);
+        Page<Brand> brands = brandRepository.findByNameContaining(name, pageable);
+        return  brands.map(brandMapper::toDto);
     }
 }

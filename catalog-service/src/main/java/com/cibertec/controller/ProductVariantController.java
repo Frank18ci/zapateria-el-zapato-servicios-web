@@ -20,6 +20,16 @@ public class ProductVariantController {
     public ResponseEntity<?> getAllProductVariants() {
         return ResponseEntity.ok(productVariantService.getAllProductVariants());
     }
+    @GetMapping("/page")
+    public ResponseEntity<?> findAllPaged(
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "10") int size,
+            @RequestParam(defaultValue = "skuCode") String sortBy,
+            @RequestParam(defaultValue = "asc") String direction,
+            @RequestParam(defaultValue = "") String skuCode
+    ) {
+        return ResponseEntity.ok(productVariantService.getAllPaged(page, size, sortBy, direction, skuCode));
+    }
     @GetMapping("/{id}")
     public ResponseEntity<?> getProductVariantById(@PathVariable Long id) {
         return ResponseEntity.ok(productVariantService.getProductVariantById(id));

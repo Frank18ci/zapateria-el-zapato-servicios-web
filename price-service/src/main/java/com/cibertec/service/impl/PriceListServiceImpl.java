@@ -2,6 +2,11 @@ package com.cibertec.service.impl;
 
 import java.util.List;
 
+import com.cibertec.util.SortDirectionDefault;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import com.cibertec.dto.PriceListRequest;
@@ -58,5 +63,13 @@ public class PriceListServiceImpl implements PriceListService {
             () -> new ResourceNotFound("PriceList not found with id: " + id)
         );
         priceListRepository.delete(priceListFound);
+    }
+
+    @Override
+    public Page<PriceListResponse> getAllPaged(int page, int size, String sortBy, String direction, String name) {
+        Sort sort = Sort.by(SortDirectionDefault.getSortDirection(direction), sortBy);
+        Pageable pageable = PageRequest.of(page,size,sort);
+        Page<PriceList> priceLists = priceListRepository.findByNameContaining(name, pageable);
+        return  priceLists.map(priceListMapper::toDto);
     }
 }

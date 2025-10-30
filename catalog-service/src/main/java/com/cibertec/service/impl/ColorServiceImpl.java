@@ -3,11 +3,17 @@ package com.cibertec.service.impl;
 import com.cibertec.dto.ColorRequest;
 import com.cibertec.dto.ColorResponse;
 import com.cibertec.exception.ResourceNotFound;
+import com.cibertec.model.Category;
 import com.cibertec.model.Color;
 import com.cibertec.repository.ColorRepository;
 import com.cibertec.service.ColorService;
 import com.cibertec.util.ColorMapper;
+import com.cibertec.util.SortDirectionDefault;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -50,5 +56,13 @@ public class ColorServiceImpl implements ColorService {
                 () -> new ResourceNotFound("Color not found with id: " + id)
         );
         colorRepository.delete(colorFound);
+    }
+
+    @Override
+    public Page<ColorResponse> getAllColorsPaged(int page, int size, String sortBy, String direction, String name) {
+        Sort sort = Sort.by(SortDirectionDefault.getSortDirection(direction), sortBy);
+        Pageable pageable = PageRequest.of(page,size,sort);
+        Page<Color> colors = colorRepository.findByNameContaining(name, pageable);
+        return  colors.map(colorMapper::toDto);
     }
 }
