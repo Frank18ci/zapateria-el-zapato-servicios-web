@@ -2,6 +2,7 @@ package com.cibertec.service.impl;
 
 import java.util.List;
 
+import com.cibertec.client.ProductVariantClient;
 import org.springframework.stereotype.Service;
 
 import com.cibertec.dto.StockMovementRequest;
@@ -18,33 +19,37 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class StockMovementServiceImpl implements StockMovementService {
 
-    private final StockMovementRepository stockMovementRespository;
+    private final StockMovementRepository stockMovementRepository;
     private final StockMovementMapper stockMovementMapper;
+
+    private final ProductVariantClient productVariantClient;
 
     @Override
     public List<StockMovementResponse> getAllStockMovements() {
-        return stockMovementMapper.toDtoList(stockMovementRespository.findAll());
+        return stockMovementMapper.toDtoList(stockMovementRepository.findAll());
     }
 
     @Override
     public StockMovementResponse getStockMovementById(Long id) {
-        return stockMovementMapper.toDto(stockMovementRespository.findById(id).orElseThrow(
+        return stockMovementMapper.toDto(stockMovementRepository.findById(id).orElseThrow(
                 () -> new ResourceNotFound("StockMovement not found with id: " + id)
-
         ));
     }
 
     @Override
     public StockMovementResponse createStockMovement(StockMovementRequest request) {
-        return stockMovementMapper.toDto(stockMovementRespository.save(stockMovementMapper.toEntity(request)));
+        productVariantClient.getProductVariantById(request.variantId());
+        return stockMovementMapper.toDto(stockMovementRepository.save(stockMovementMapper.toEntity(request)));
     }
 
 
     @Override
     public StockMovementResponse updateStockMovement(Long id, StockMovementRequest request) {
-        StockMovement stockMovementFound = stockMovementRespository.findById(id).orElseThrow(
+        StockMovement stockMovementFound = stockMovementRepository.findById(id).orElseThrow(
                 () -> new ResourceNotFound("StockMovement not found with id: " + id)
         );
+
+        productVariantClient.getProductVariantById(request.variantId());
 
         stockMovementFound.setVariantId(request.variantId());
         stockMovementFound.setBinCode(request.binCode());
@@ -55,21 +60,15 @@ public class StockMovementServiceImpl implements StockMovementService {
         stockMovementFound.setReason(request.reason());
         stockMovementFound.setRefDoc(request.refDoc());
         stockMovementFound.setWarehouse(stockMovementMapper.toEntity(request).getWarehouse());
-        return stockMovementMapper.toDto(stockMovementRespository.save(stockMovementFound));
+        return stockMovementMapper.toDto(stockMovementRepository.save(stockMovementFound));
 
     }
 
     @Override
     public void deleteStockMovement(Long id) {
-
-
-        StockMovement stockMovementFound = stockMovementRespository.findById(id).orElseThrow(
+        StockMovement stockMovementFound = stockMovementRepository.findById(id).orElseThrow(
                 () -> new ResourceNotFound("StockMovement not found with id: " + id)
         );
-        stockMovementRespository.delete(stockMovementFound);
-
-
+        stockMovementRepository.delete(stockMovementFound);
     }
-
-
 }

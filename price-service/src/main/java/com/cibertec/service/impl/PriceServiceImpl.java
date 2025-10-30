@@ -2,6 +2,7 @@ package com.cibertec.service.impl;
 
 import java.util.List;
 
+import com.cibertec.client.ProductVariantClient;
 import org.springframework.stereotype.Service;
 
 import com.cibertec.dto.PriceRequest;
@@ -16,33 +17,40 @@ import lombok.RequiredArgsConstructor;
 
 @Service
 @RequiredArgsConstructor
-public class PriceServiceImpl  implements  PriceService{
+public class PriceServiceImpl implements PriceService {
 
     private final PriceRepository priceRepository;
     private final PriceMapper priceMapper;
+
+    private final ProductVariantClient productVariantClient;
 
     @Override
     public List<PriceResponse> getAllPrices() {
         return priceMapper.toDtoList(priceRepository.findAll());
     }
-     
-     @Override
+
+    @Override
     public PriceResponse getPriceById(Long id) {
         return priceMapper.toDto(priceRepository.findById(id).orElseThrow(
-            () -> new ResourceNotFound("Price not found with id: " + id)
+                () -> new ResourceNotFound("Price not found with id: " + id)
         ));
     }
 
-     @Override
+    @Override
     public PriceResponse createPrice(PriceRequest priceRequest) {
+
+        productVariantClient.getProductVariantById(priceRequest.variantId());
+
         return priceMapper.toDto(priceRepository.save(priceMapper.toEntity(priceRequest)));
     }
 
-      @Override
+    @Override
     public PriceResponse updatePrice(Long id, PriceRequest priceRequest) {
         Price priceFound = priceRepository.findById(id).orElseThrow(
-            () -> new ResourceNotFound("Price not found with id: " + id)
+                () -> new ResourceNotFound("Price not found with id: " + id)
         );
+
+        productVariantClient.getProductVariantById(priceRequest.variantId());
 
         priceFound.setUnitPrice(priceRequest.unitPrice());
         priceFound.setVariantId(priceRequest.variantId());
@@ -50,13 +58,13 @@ public class PriceServiceImpl  implements  PriceService{
         return priceMapper.toDto(priceRepository.save(priceFound));
     }
 
-     @Override
+    @Override
     public void deletePrice(Long id) {
-            Price priceFound = priceRepository.findById(id).orElseThrow(
+        Price priceFound = priceRepository.findById(id).orElseThrow(
                 () -> new ResourceNotFound("Price not found with id: " + id)
         );
         priceRepository.delete(priceFound);
-         
+
     }
-    
+
 }
