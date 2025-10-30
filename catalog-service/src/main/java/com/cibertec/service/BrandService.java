@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.cibertec.dto.BrandRequest;
 import com.cibertec.dto.BrandResponse;
+import org.springframework.data.domain.Page;
 
 public interface BrandService {
 
@@ -16,4 +17,6 @@ public interface BrandService {
     BrandResponse updateBrand(Long id, BrandRequest brandRequest);
     
     void deleteBrand(Long id);
+
+    Page<BrandResponse> getAllBrandsPaged(int page, int size, String sortBy, String direction, String name);
 }

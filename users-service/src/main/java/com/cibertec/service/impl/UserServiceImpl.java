@@ -3,12 +3,18 @@ package com.cibertec.service.impl;
 import com.cibertec.dto.UserRequest;
 import com.cibertec.dto.UserResponse;
 import com.cibertec.exception.ResourceNotFound;
+import com.cibertec.model.Role;
 import com.cibertec.model.User;
 import com.cibertec.repository.RoleRepository;
 import com.cibertec.repository.UserRepository;
 import com.cibertec.service.UserService;
+import com.cibertec.util.SortDirectionDefault;
 import com.cibertec.util.UserMapper;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -59,5 +65,13 @@ public class UserServiceImpl implements UserService {
                 () -> new ResourceNotFound("User not found with id: " + id)
         );
         userRepository.delete(userFound);
+    }
+
+    @Override
+    public Page<UserResponse> getAllPaged(int page, int size, String sortBy, String direction, String email) {
+        Sort sort = Sort.by(SortDirectionDefault.getSortDirection(direction), sortBy);
+        Pageable pageable = PageRequest.of(page, size, sort);
+        Page<User> users = userRepository.findByEmailContaining(email, pageable);
+        return users.map(userMapper::toDto);
     }
 }

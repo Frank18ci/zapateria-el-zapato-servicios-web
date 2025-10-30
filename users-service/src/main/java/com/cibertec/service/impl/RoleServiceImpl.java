@@ -7,7 +7,12 @@ import com.cibertec.model.Role;
 import com.cibertec.repository.RoleRepository;
 import com.cibertec.service.RoleService;
 import com.cibertec.util.RoleMapper;
+import com.cibertec.util.SortDirectionDefault;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -54,5 +59,13 @@ public class RoleServiceImpl implements RoleService {
                 () -> new ResourceNotFound("Role not found with id: " + id)
         );
         roleRepository.delete(roleFound);
+    }
+
+    @Override
+    public Page<RoleResponse> getAllPaged(int page, int size, String sortBy, String direction, String name) {
+        Sort sort = Sort.by(SortDirectionDefault.getSortDirection(direction), sortBy);
+        Pageable pageable = PageRequest.of(page, size, sort);
+        Page<Role> roles = roleRepository.findByNameContaining(name, pageable);
+        return roles.map(roleMapper::toDto);
     }
 }

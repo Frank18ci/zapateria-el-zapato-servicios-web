@@ -3,11 +3,17 @@ package com.cibertec.service.impl;
 import com.cibertec.dto.ProductVariantRequest;
 import com.cibertec.dto.ProductVariantResponse;
 import com.cibertec.exception.ResourceNotFound;
+import com.cibertec.model.Color;
 import com.cibertec.model.ProductVariant;
 import com.cibertec.repository.ProductVariantRepository;
 import com.cibertec.service.ProductVariantService;
 import com.cibertec.util.ProductVariantMapper;
+import com.cibertec.util.SortDirectionDefault;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -53,5 +59,13 @@ public class ProductVariantServiceImpl implements ProductVariantService {
                 () -> new ResourceNotFound("ProductVariant not found with id " + id)
         );
         productVariantRepository.delete(productVariantFound);
+    }
+
+    @Override
+    public Page<ProductVariantResponse> getAllPaged(int page, int size, String sortBy, String direction, String skuCode) {
+        Sort sort = Sort.by(SortDirectionDefault.getSortDirection(direction), sortBy);
+        Pageable pageable = PageRequest.of(page,size,sort);
+        Page<ProductVariant> productVariants = productVariantRepository.findBySkuCodeContaining(skuCode, pageable);
+        return  productVariants.map(productVariantMapper::toDto);
     }
 }

@@ -17,6 +17,16 @@ public class ColorController {
     public ResponseEntity<?> getAllColors() {
         return ResponseEntity.ok(colorService.getAllColors());
     }
+    @GetMapping("/page")
+    public ResponseEntity<?> findAllPaged(
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "10") int size,
+            @RequestParam(defaultValue = "name") String sortBy,
+            @RequestParam(defaultValue = "asc") String direction,
+            @RequestParam(defaultValue = "") String name
+    ) {
+        return ResponseEntity.ok(colorService.getAllColorsPaged(page, size, sortBy, direction, name));
+    }
     @GetMapping("/{id}")
     public ResponseEntity<?> getColorById(@PathVariable Long id) {
         return ResponseEntity.ok(colorService.getColorById(id));
