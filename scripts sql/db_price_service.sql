@@ -14,9 +14,9 @@ CREATE TABLE price_list (
 );
 
 insert into price_list (name, currency_code, valid_from, valid_to) values
-('Precio Minorista', 'USD', '2024-01-01', NULL),
-('Precio Mayorista', 'USD', '2024-01-01', NULL),
-('Oferta Especial Verano 2024', 'USD', '2024-06-01', '2024-08-31');
+('Precio Minorista', 'PEN', '2025-01-01', NULL),
+('Precio Mayorista', 'PEN', '2025-01-01', NULL),
+('Oferta Especial Verano 2025', 'USD', '2025-01-01', '2025-03-31');
 
 CREATE TABLE price (
   id            BIGINT auto_increment PRIMARY KEY,
