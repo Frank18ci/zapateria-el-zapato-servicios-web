@@ -5,7 +5,12 @@ import com.cibertec.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationToken;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.stream.Collectors;
 
 @RestController
 @RequiredArgsConstructor
@@ -48,5 +53,17 @@ public class UserController {
     public ResponseEntity<?> deleteUser(@PathVariable Long id) {
         userService.deleteUser(id);
         return ResponseEntity.noContent().build();
+    }
+    @PostMapping("/update-keycloak/{id}")
+    public ResponseEntity<?> updateUser(@PathVariable Long id, JwtAuthenticationToken auth) {
+        String keycloakId = auth.getToken().getSubject();
+        return ResponseEntity.status(HttpStatus.OK).body(userService.updateKeyCloakId(id, keycloakId));
+    }
+    @GetMapping("/mis-roles")
+    public String misRoles(Authentication authentication) {
+        return authentication.getAuthorities()
+                .stream()
+                .map(GrantedAuthority::getAuthority)
+                .collect(Collectors.joining(", "));
     }
 }
