@@ -15,9 +15,11 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -25,6 +27,7 @@ public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
     private final RoleRepository roleRepository;
     private final UserMapper userMapper;
+    private final PasswordEncoder passwordEncoder;
 
     @Override
     public List<UserResponse> getAllUsers() {
@@ -40,7 +43,10 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserResponse createUser(UserRequest userRequest) {
-        return userMapper.toDto(userRepository.save(userMapper.toEntity(userRequest, roleRepository)));
+        User user = userMapper.toEntity(userRequest, roleRepository);
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
+
+        return userMapper.toDto(userRepository.save(user));
     }
 
     @Override
@@ -50,7 +56,7 @@ public class UserServiceImpl implements UserService {
         );
 
         userFound.setEmail(userRequest.email());
-        userFound.setPassword(userRequest.password());
+        userFound.setPassword(passwordEncoder.encode(userRequest.password()));
         userFound.setUsername(userRequest.username());
         userFound.setFullName(userRequest.fullName());
         userFound.setStatus(userRequest.status());
@@ -73,5 +79,18 @@ public class UserServiceImpl implements UserService {
         Pageable pageable = PageRequest.of(page, size, sort);
         Page<User> users = userRepository.findByEmailContaining(email, pageable);
         return users.map(userMapper::toDto);
+    }
+
+    @Override
+    public UserResponse updateKeyCloakId(Long id, String keycloakId) {
+        Optional<User> user = userRepository.findById(id);
+        if (user.isPresent()) {
+            User userToUpdate = user.get();
+            userToUpdate.setKeycloakSub(keycloakId);
+            User updatedUser = userRepository.save(userToUpdate);
+            return userMapper.toDto(updatedUser);
+        } else {
+            throw new ResourceNotFound("Cliente no encontrado con ID: " + id);
+        }
     }
 }

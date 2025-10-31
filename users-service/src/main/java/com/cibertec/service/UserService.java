@@ -14,4 +14,6 @@ public interface UserService {
     void deleteUser(Long id);
 
     Page<UserResponse> getAllPaged(int page, int size, String sortBy, String direction, String email);
+
+    UserResponse updateKeyCloakId(Long id, String keycloakId);
 }
